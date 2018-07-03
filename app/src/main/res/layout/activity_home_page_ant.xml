@@ -5,5 +5,243 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.adjointtechnologies.mapper.HomePageAnt">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/start_khm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="Start" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Details"
+            android:id="@+id/details_khm"
+            android:layout_marginTop="@dimen/_10sdp"/>
+        <Button
+            android:id="@+id/sync_data_khm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:text="Sync Data" />
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/table_layout">
 
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="Your Stores" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="Today Data" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="3"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="Month Data" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="Outside " />
+
+                <TextView
+                    android:id="@+id/table_today_outcount_khm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="loading" />
+
+                <TextView
+                    android:id="@+id/table_month_outcount_khm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="3"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="loading" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="Inside " />
+
+                <TextView
+                    android:id="@+id/table_today_incount_khm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="loading" />
+
+                <TextView
+                    android:id="@+id/table_month_incount_khm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="3"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="loading" />
+            </TableRow>
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="Total " />
+
+                <TextView
+                    android:id="@+id/table_today_totalcount_khm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="loading" />
+
+                <TextView
+                    android:id="@+id/table_month_totalcount_khm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="3"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="loading" />
+            </TableRow>
+        </TableLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Surveys Done Today : " />
+
+            <TextView
+                android:id="@+id/today_surveys_khm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sync Pending : " />
+
+            <TextView
+                android:id="@+id/data_sync_pending_khm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/sync_images_khm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:text="Sync Images" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pending Images To Sync : " />
+
+            <TextView
+                android:id="@+id/images_pending_khm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/logout_khm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:layout_marginTop="@dimen/_10sdp"
+            />
+        <include layout="@layout/footer" />
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

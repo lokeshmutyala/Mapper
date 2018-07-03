@@ -4,24 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.adjointtechnologies.mapper.CommonAuditActivity">
-<ScrollView
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    tools:layout_constraintTop_creator="1"
-    tools:layout_constraintRight_creator="1"
-    tools:layout_constraintBottom_creator="1"
-    android:layout_marginStart="8dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    android:layout_marginEnd="8dp"
-    app:layout_constraintRight_toRightOf="parent"
-    android:layout_marginTop="8dp"
-    tools:layout_constraintLeft_creator="1"
-    android:layout_marginBottom="8dp"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp">
+    tools:context="com.adjointtechnologies.mapper.CommonEditPage">
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="@dimen/_15sdp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress_common_edit"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -99,7 +107,7 @@
                 android:id="@+id/open_close_khm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/open_khm"
@@ -127,7 +135,7 @@
                 android:id="@+id/perm_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/permanent_store"
@@ -152,24 +160,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Does The Store Contain Dealer Board"/>
-
             <RadioGroup
-                android:id="@+id/dealor_board"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
+                android:id="@+id/dealor_board"
+                >
                 <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/yes_dealor_board"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Yes" />
-
+                    android:text="Yes"/>
                 <RadioButton
-                    android:id="@+id/no_dealor_board"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No" />
+                    android:id="@+id/no_dealor_board"
+                    android:text="No"/>
             </RadioGroup>
             <!--CheckBox
                 android:layout_width="wrap_content"
@@ -194,27 +199,82 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Does The Store Contain Company Dealer Board (Non Telecom)"/>
-
             <RadioGroup
-                android:id="@+id/company_dealor_board"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
+                android:id="@+id/company_dealor_board">
                 <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/yes_company_dealor_board"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Yes" />
-
+                    android:text="Yes"/>
                 <RadioButton
-                    android:id="@+id/no_company_dealor_board"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No" />
+                    android:id="@+id/no_company_dealor_board"
+                    android:text="No"/>
             </RadioGroup>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/open_close_depend_common"
+            android:orientation="vertical">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/owner_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Owner Name" />
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/mobile_khm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mobile Number*"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/verify_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="Verify Mobile" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/alternate_mobile_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Alternate Mobile Number"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/verify_alternate_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="Verify Alternate Mobile" />
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -246,7 +306,7 @@
                     android:id="@+id/kirana_shop_khm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Grocery/ Kirana/ General Store" />
+                    android:text="Kirana/ General Store" />
 
                 <RadioButton
                     android:id="@+id/bakery_khm"
@@ -282,13 +342,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Restaurant / Bar/ Wine Shop"
-                    android:id="@+id/type_dhaba_restaurant_khm"
-                    android:visibility="gone"/>
+                    android:id="@+id/type_dhaba_restaurant_khm"/>
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tiffin/ Breakfast Centre"
-                    android:visibility="gone"
                     android:id="@+id/tiffin_breakfast_centre_khm"/>
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -300,10 +358,8 @@
                     android:layout_height="wrap_content"
                     android:text="Pooja Shop"
                     android:id="@+id/poojashop"/>
-
             </RadioGroup>
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -312,24 +368,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Is There Any Educational Institute Near By?*"/>
-
             <RadioGroup
-                android:id="@+id/nearby_school"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
+                android:id="@+id/nearby_school">
                 <RadioButton
-                    android:id="@+id/yes_nearby_school"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Yes" />
-
+                    android:text="Yes"
+                    android:id="@+id/yes_nearby_school"/>
                 <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/no_nearby_school"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No" />
+                    android:text="No"/>
             </RadioGroup>
         </LinearLayout>
         <TextView
@@ -337,12 +389,7 @@
             android:layout_height="wrap_content"
             android:text="Location Near By: "
             android:layout_marginTop="@dimen/_10sdp"/>
-        <!--CheckBox
-            android:id="@+id/near_by_school_new"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Educational Institute"
-            /-->
+
         <CheckBox
             android:id="@+id/near_by_teashop_new"
             android:layout_width="wrap_content"
@@ -362,6 +409,12 @@
             android:layout_height="wrap_content"
             android:text="Dhaba/Restaurant"/>
 
+        <!--CheckBox
+            android:id="@+id/near_by_school_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Educational Institute"/-->
+
         <CheckBox
             android:id="@+id/railway_station_new"
             android:layout_width="wrap_content"
@@ -377,8 +430,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/near_by_petrol_pump_new"
-            android:text="Petrol Pump"
-            android:visibility="gone"/>
+            android:text="Petrol Pump"/>
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -392,204 +444,129 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/open_close_depend_common"
+            android:id="@+id/open_close_depend_2"
             android:orientation="vertical">
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
 
-                <EditText
-                    android:id="@+id/owner_name"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Owner Name" />
-            </android.support.design.widget.TextInputLayout>
+                    android:textStyle="bold"
+                    android:text="Does The Store Sell Cigarettes ? * " />
 
+                <RadioGroup
+                    android:id="@+id/is_sell_cigar_khm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
+                    <RadioButton
+                        android:id="@+id/yes_sell_cigar_khm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Yes" />
 
-            <android.support.design.widget.TextInputLayout
+                    <RadioButton
+                        android:id="@+id/no_sell_cigar_khm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+                </RadioGroup>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/mobile_khm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Mobile Number"
-                    android:inputType="number" />
-            </android.support.design.widget.TextInputLayout>
-
-
-            <Button
-                android:id="@+id/verify_mobile"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:text="Verify Mobile" />
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:id="@+id/layout_itc_cigarette_salesman"
+                android:visibility="gone">
 
-
-            <android.support.design.widget.TextInputLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Does ITC Cigarette(Goldflake,Classic,American Club) Salesman Visit Store ?*"/>
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/itc_cigarette_salesman_visits_store"
+                    android:orientation="vertical">
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Yes"
+                        android:id="@+id/yes_itc_cigarette_salesman_visits_store"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No"
+                        android:id="@+id/no_itc_cigarette_salesman_visits_store"/>
+                </RadioGroup>
+            </LinearLayout>
+            <!--LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/alternate_mobile_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Alternate Mobile Number"
-                    android:inputType="number" />
-            </android.support.design.widget.TextInputLayout>
-
-            <Button
-                android:id="@+id/verify_alternate_mobile"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:text="Verify Alternate Mobile" />
+                android:orientation="vertical"
+                android:gravity="center_vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Does ITC Salesman Visit Store ?*"/>
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/itc_salesman_visits_store"
+                    android:orientation="vertical">
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Yes"
+                        android:id="@+id/yes_itc_salesman_visits_store"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No"
+                        android:id="@+id/no_itc_salesman_visits_store"/>
+                </RadioGroup>
+            </LinearLayout-->
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:id="@+id/layout_itc_non_cigarette_salesman">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Does ITC Non Cigarette(Aashirvaad,Sunfeast,Bingo,Vivel,Mangaldeep,Engage) Salesman Visit Store ?*"/>
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/itc_non_cigarette_salesman_visits_store"
+                    android:orientation="vertical">
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Yes"
+                        android:id="@+id/yes_itc_non_cigarette_salesman_visits_store"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No"
+                        android:id="@+id/no_itc_non_cigarette_salesman_visits_store"/>
+                </RadioGroup>
+            </LinearLayout>
         </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/open_close_depend_2"
-    android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="Does The Store Sell Cigarettes ? * " />
-
-            <RadioGroup
-                android:id="@+id/is_sell_cigar_khm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/yes_sell_cigar_khm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Yes" />
-
-                <RadioButton
-                    android:id="@+id/no_sell_cigar_khm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No" />
-            </RadioGroup>
-        </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_vertical"
-        android:id="@+id/layout_itc_cigarette_salesman"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Does ITC Cigarette(Goldflake,Classic,American Club) Salesman Visit Store ?*"/>
-
-        <RadioGroup
-            android:id="@+id/itc_cigarette_salesman_visits_store"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/yes_itc_cigarette_salesman_visits_store"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Yes" />
-
-            <RadioButton
-                android:id="@+id/no_itc_cigarette_salesman_visits_store"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="No" />
-        </RadioGroup>
-    </LinearLayout>
-<!--LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center_vertical">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="Does ITC Salesman Visit Store ?*"/>
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/itc_salesman_visits_store"
-        android:orientation="vertical">
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Yes"
-            android:id="@+id/yes_itc_salesman_visits_store"/>
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No"
-            android:id="@+id/no_itc_salesman_visits_store"/>
-    </RadioGroup>
-</LinearLayout-->
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:id="@+id/layout_itc_non_cigarette_salesman">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="Does ITC Non Cigarette(Aashirvaad,Sunfeast,Bingo,Vivel,Mangaldeep,Engage) Salesman Visit Store ?*"/>
-
-            <RadioGroup
-                android:id="@+id/itc_non_cigarette_salesman_visits_store"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/yes_itc_non_cigarette_salesman_visits_store"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Yes" />
-
-                <RadioButton
-                    android:id="@+id/no_itc_non_cigarette_salesman_visits_store"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No" />
-            </RadioGroup>
-        </LinearLayout>
-</LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select If Store Has Any Issue With Itc:"/>
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/itc_issues"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/issue_options"></android.support.v7.widget.AppCompatSpinner>
 
         <TextView
             android:id="@+id/accuracy_khm"
@@ -603,5 +580,8 @@
             android:id="@+id/submit_khm"
             android:text="Submit"/>
     </LinearLayout>
-</ScrollView>
+
+</LinearLayout>
+    </ScrollView>
+    <include layout="@layout/footer"/>
 </android.support.constraint.ConstraintLayout>

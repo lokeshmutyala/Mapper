@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:maxLines="1"
+    android:id="@+id/store_name_window"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/distance_window"
+        android:layout_marginLeft="@dimen/_5sdp"
+        />
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/action_window"
+    android:text="Action"/>
+
+        <Button
+            android:id="@+id/navigate_window"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Navigate"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

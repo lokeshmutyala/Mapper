@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.adjointtechnologies.mapper.commonadmins.CommonAuditPage">
+<FrameLayout
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    tools:layout_constraintTop_creator="1"
+    tools:layout_constraintRight_creator="1"
+    tools:layout_constraintBottom_creator="1"
+    android:layout_marginStart="8dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_marginEnd="8dp"
+    app:layout_constraintRight_toRightOf="parent"
+    android:layout_marginTop="8dp"
+    tools:layout_constraintLeft_creator="1"
+    android:layout_marginBottom="8dp"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:id="@+id/rootlayout">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:orientation="horizontal">
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/add_new_store"
+            android:layout_gravity="start|top"
+            android:src="@drawable/add_64"
+            app:backgroundTint="@color/colorPrimary"
+            android:visibility="gone"
+            android:layout_weight="0.2"
+            app:fabSize="normal"/>
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="List View"
+        android:id="@+id/listview"
+        android:alpha="0.5"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:layout_weight="0.4"/>
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Map View"
+        android:layout_weight="0.4"
+        android:id="@+id/mapview"
+        android:clickable="false"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:layout_alignParentRight="true"/>
+    </LinearLayout>
+    <!--RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_gravity="end|top"
+        android:id="@+id/route_point">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/route"
+            android:text="Route"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/point"
+            android:text="Point"/>
+    </RadioGroup-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_header"
+            android:visibility="gone"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="Store Name"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="Distance(M)"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#ccc"
+            android:visibility="gone"></android.support.v7.widget.RecyclerView>
+        <!--/android.support.constraint.ConstraintLayout-->
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map_audit"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        tools:context="com.adjointtechnologies.mapper.commonadmins.CommonAuditPage"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:apiKey="AIzaSyBqpOKi1lGYH-JyftOLAepNKXSvEXm7qYQ"/>
+    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/refresh_audit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:src="@drawable/refresh_64_r"
+        app:backgroundTint="@color/common_google_signin_btn_text_dark_pressed" />
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/request_image_list"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:src="@drawable/picture_64"
+        app:backgroundTint="@color/common_google_signin_btn_text_dark_pressed"
+        android:visibility="gone"
+        app:fabSize="normal"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/navigate_list"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:src="@drawable/navigation"
+        app:fabSize="normal"
+        app:backgroundTint="@color/common_google_signin_btn_text_dark_pressed"
+        android:visibility="gone"/>
+
+</FrameLayout>
+</android.support.constraint.ConstraintLayout>

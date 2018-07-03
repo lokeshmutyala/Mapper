@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_5sdp"
+    android:elevation="@dimen/_25sdp">
+<TextView
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:id="@+id/mapper_name"
+    android:background="@drawable/cell_shape"
+    android:layout_weight="0.4"
+    android:gravity="center"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/total_stores"
+        android:background="@drawable/cell_shape"
+        android:gravity="center"
+        android:layout_weight="0.2"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:gravity="center"
+        android:background="@drawable/cell_shape"
+        android:id="@+id/inside_stores"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/avg_work_hours"
+        android:gravity="center"
+        android:background="@drawable/cell_shape"
+        android:layout_weight="0.2"/>
+</LinearLayout>

@@ -1,7 +1,6 @@
 package com.adjointtechnologies.mapper;
 
 import android.app.Activity;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,15 +10,10 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
-import android.provider.MediaStore;
-import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,7 +25,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,6 +33,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adjointtechnologies.mapper.database.CommonStoreData;
 import com.adjointtechnologies.mapper.database.CommonStoreDataEntity;
 import com.adjointtechnologies.mapper.database.ExtraStoreDataEntity;
 import com.adjointtechnologies.mapper.database.PolygonCornersEntity;
@@ -69,12 +63,9 @@ import io.requery.Persistable;
 import io.requery.query.Tuple;
 import io.requery.reactivex.ReactiveEntityStore;
 
-public class CommonAuditActivity extends AppCompatActivity {
-
-    public static long lastTime=0;
-    private static final int REQUEST_CHECK_SETTINGS = 0x1;
+public class MumbaiSurveyPage extends AppCompatActivity {
     private ReactiveEntityStore<Persistable> data;
-    String mCurrentPhotoPath;
+    String mCurrentPhotoPath="";
     final String TAG="commonauditactivity";
     private boolean goback=false;
     long back_time=0;
@@ -85,7 +76,6 @@ public class CommonAuditActivity extends AppCompatActivity {
     boolean isMsgSent2=false;
     boolean isMobileVerified2=false;
     Verification mVerification;
-    static final int REQUEST_TAKE_PHOTO = 1;
     String inOrOut="";
     String INNER="inner";
     String OUTER="outer";
@@ -95,88 +85,59 @@ public class CommonAuditActivity extends AppCompatActivity {
     TextView accuracy;
     private boolean isAudit=false;
     EditText store_name, landmark, owner_mobile_number,owner_name, alternate_mobile_number;
-    RadioGroup store_condition,store_type,sell_cigarette, cigarette_salesman_visit_store, non_cigarette_salesman_vist_store,permTemp;
-//    RadioGroup itc_salesman_visit_store;
+    RadioGroup dealorBoard,storeCategory,nearSchool,nearRailBus,nearApartment,sell_cigarette,sellBiscuits,sellChipsNamkeen,sellSoaps,sellDeodorants
+            ,pepsiCokeCooler,cadburyNestleDispenser,openClose,tempPerm;
     private boolean is_sell_cigar=false;
-    private boolean itc_salesman_visit=false;
     float acc=100;
     Button take_pic,inner_picture_button,submit, verify_mobile,verify_alternate_mobile;
     String storeid="";
-    boolean isImage=false;
-    String open_close="";
-    String typeofstore="";
-    LinearLayout root,cigarDepend;
+    LinearLayout root;
     File imgfolder;
-    RadioGroup isItcSalesMan;
-    boolean isItcSales=false;
-    boolean isItcChecked=false;
-    CheckBox near_by_teashop, wine_shop, dhaba, railway_station, road_junction,petrol_pump,temple,hospital;
-//    CheckBox glow_sign,non_lit;
-    RadioGroup dealorBoard,companyDealorBoard,nearSchool;
     boolean isInside=false;
-    LinearLayout open_close_depend,open_close_depend_2, layout_itc_cigarette_salesman, layout_itc_non_cigarette_salesman,dealorBoardDepend;
     final int cameraTestReqCode=608;
     AppCompatSpinner issuesSpinner;
     String issue="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.common_activity_audit);
+        setContentView(R.layout.activity_mumbai_survey_page);
         data=((ProductApplication)getApplication()).getData();
         storeid=""+ConstantValues.audit_id+System.currentTimeMillis();
-        mImageView=(ImageView)findViewById(R.id.imageview_khm);
+        mImageView=(ImageView)findViewById(R.id.imageview_mumbai);
         isAudit=getIntent().getBooleanExtra("isAudit",false);
-        innerImageView=(ImageView)findViewById(R.id.imageview_inner_picture);
+        innerImageView=(ImageView)findViewById(R.id.imageview_inner_picture_mumbai);
         imgfolder=new File(ConstantValues.imagepath);
-        take_pic=(Button)findViewById(R.id.take_pic_khm);
-        inner_picture_button=(Button)findViewById(R.id.inner_picture);
-        submit=(Button)findViewById(R.id.submit_khm);
-        cigarDepend=(LinearLayout)findViewById(R.id.cigar_depend_khm);
-        accuracy = (TextView) findViewById(R.id.accuracy_khm);
-        store_name = (EditText) findViewById(R.id.store_name_khm);
+        take_pic=(Button)findViewById(R.id.take_pic_mumbai);
+        inner_picture_button=(Button)findViewById(R.id.inner_picture_mumbai);
+        submit=(Button)findViewById(R.id.submit_mumbai);
+        accuracy = (TextView) findViewById(R.id.accuracy_mumbai);
+        store_name = (EditText) findViewById(R.id.store_name_mumbai);
         verify_mobile = (Button) findViewById(R.id.verify_mobile);
         verify_alternate_mobile=(Button) findViewById(R.id.verify_alternate_mobile);
         alternate_mobile_number=(EditText) findViewById(R.id.alternate_mobile_number);
-        open_close_depend=(LinearLayout)findViewById(R.id.open_close_depend_common);
-        open_close_depend_2=(LinearLayout) findViewById(R.id.open_close_depend_2);
-        landmark = (EditText) findViewById(R.id.landmark_khm);
-        owner_mobile_number = (EditText) findViewById(R.id.mobile_khm);
+        landmark = (EditText) findViewById(R.id.landmark_mumbai);
+        owner_mobile_number = (EditText) findViewById(R.id.mobile_mumbai);
         owner_name=(EditText) findViewById(R.id.owner_name);
-        store_condition = (RadioGroup) findViewById(R.id.open_close_khm);
-        store_type = (RadioGroup) findViewById(R.id.store_type_khm);
         issuesSpinner=(AppCompatSpinner) findViewById(R.id.itc_issues);
-        permTemp=(RadioGroup) findViewById(R.id.perm_temp);
+        root=(LinearLayout)findViewById(R.id.rootlayout_mumbai);
         dealorBoard=(RadioGroup) findViewById(R.id.dealor_board);
-        companyDealorBoard=(RadioGroup) findViewById(R.id.company_dealor_board);
-        dealorBoardDepend=(LinearLayout) findViewById(R.id.dealor_board_depend);
+        storeCategory=(RadioGroup) findViewById(R.id.store_type_mumbai);
         nearSchool=(RadioGroup) findViewById(R.id.nearby_school);
-        root=(LinearLayout)findViewById(R.id.rootlayout_khm);
+        nearRailBus=(RadioGroup) findViewById(R.id.nearby_bus_rail);
+        nearApartment=(RadioGroup) findViewById(R.id.nearby_apartment);
+        sell_cigarette=(RadioGroup) findViewById(R.id.is_sell_cigar_mumbai);
+        sellBiscuits=(RadioGroup) findViewById(R.id.is_sell_biscuits_mumbai);
+        sellChipsNamkeen=(RadioGroup) findViewById(R.id.is_sell_chips_namkeen_mumbai);
+        sellSoaps=(RadioGroup) findViewById(R.id.is_sell_soaps_mumbai);
+        sellDeodorants=(RadioGroup) findViewById(R.id.is_sell_deodorants_mumbai);
+        pepsiCokeCooler=(RadioGroup) findViewById(R.id.pepsi_coke_cooler);
+        cadburyNestleDispenser=(RadioGroup) findViewById(R.id.cadburys_nestle_chocolate_dispenser);
+        openClose=(RadioGroup) findViewById(R.id.open_close_mumbai);
+        tempPerm=(RadioGroup) findViewById(R.id.perm_temp_mumbai);
         root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hideKeyboard(CommonAuditActivity.this);
-            }
-        });
-//        glow_sign=(CheckBox)findViewById(R.id.glow_sign_dealor_board);
-//        non_lit=(CheckBox)findViewById(R.id.non_lit_dealor_board);
-//        non_lit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if(b) {
-//                    glow_sign.setVisibility(View.VISIBLE);
-//                }else {
-//                    glow_sign.setVisibility(View.GONE);
-//                }
-//            }
-//        });
-        dealorBoard.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-                if(i==R.id.yes_dealor_board){
-                    dealorBoardDepend.setVisibility(View.VISIBLE);
-                }else {
-                    dealorBoardDepend.setVisibility(View.GONE);
-                }
+                hideKeyboard(MumbaiSurveyPage.this);
             }
         });
         issuesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -190,24 +151,6 @@ public class CommonAuditActivity extends AppCompatActivity {
 
             }
         });
-        near_by_teashop = (CheckBox) findViewById(R.id.near_by_teashop_new);
-        wine_shop = (CheckBox) findViewById(R.id.wine_shop_new);
-        dhaba = (CheckBox) findViewById(R.id.dhaba_restaurant_new);
-//        school = (CheckBox) findViewById(R.id.near_by_school_new);
-        railway_station = (CheckBox) findViewById(R.id.railway_station_new);
-        road_junction = (CheckBox) findViewById(R.id.road_junction_new);
-        petrol_pump=(CheckBox)findViewById(R.id.near_by_petrol_pump_new);
-        temple=(CheckBox)findViewById(R.id.near_temple_new);
-        hospital=(CheckBox)findViewById(R.id.near_hospital_new);
-        sell_cigarette=(RadioGroup)findViewById(R.id.is_sell_cigar_khm);
-//        itc_salesman_visit_store=(RadioGroup)findViewById(R.id.itc_salesman_visits_store);
-        cigarette_salesman_visit_store=(RadioGroup)findViewById(R.id.itc_cigarette_salesman_visits_store);
-        non_cigarette_salesman_vist_store=(RadioGroup)findViewById(R.id.itc_non_cigarette_salesman_visits_store);
-        layout_itc_cigarette_salesman=(LinearLayout)findViewById(R.id.layout_itc_cigarette_salesman);
-        layout_itc_non_cigarette_salesman=(LinearLayout)findViewById(R.id.layout_itc_non_cigarette_salesman);
-
-
-
         verify_alternate_mobile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -231,9 +174,9 @@ public class CommonAuditActivity extends AppCompatActivity {
                     }
                     if (no.charAt(0) == '6' || no.charAt(0) == '7' || no.charAt(0) == '8' || no.charAt(0) == '9') {
                         Log.i(TAG, "sending msg");
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(CommonAuditActivity.this);
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(MumbaiSurveyPage.this);
                         builder.setTitle("Enter Otp");
-                        View inflatedView = LayoutInflater.from(CommonAuditActivity.this).inflate(R.layout.otp_layout, null, false);
+                        View inflatedView = LayoutInflater.from(MumbaiSurveyPage.this).inflate(R.layout.otp_layout, null, false);
                         final EditText otp = (EditText) inflatedView.findViewById(R.id.input);
 //                            final ProgressBar progressBar = (ProgressBar) inflatedView.findViewById(R.id.otp_progress);
                         builder.setView(inflatedView);
@@ -327,9 +270,9 @@ public class CommonAuditActivity extends AppCompatActivity {
                     }
                     if (no.charAt(0) == '6' || no.charAt(0) == '7' || no.charAt(0) == '8' || no.charAt(0) == '9') {
                         Log.i(TAG, "sending msg");
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(CommonAuditActivity.this);
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(MumbaiSurveyPage.this);
                         builder.setTitle("Enter Otp");
-                        View inflatedView = LayoutInflater.from(CommonAuditActivity.this).inflate(R.layout.otp_layout, null, false);
+                        View inflatedView = LayoutInflater.from(MumbaiSurveyPage.this).inflate(R.layout.otp_layout, null, false);
                         final EditText otp = (EditText) inflatedView.findViewById(R.id.input);
 //                            final ProgressBar progressBar = (ProgressBar) inflatedView.findViewById(R.id.otp_progress);
                         builder.setView(inflatedView);
@@ -354,7 +297,7 @@ public class CommonAuditActivity extends AppCompatActivity {
 //                            builder.create();
                         mVerification = SendOtpVerification.createSmsVerification
                                 (SendOtpVerification
-                                        .config("" + no).message("Share Your OTP To Verify Your Mobile Number. Your OTP is ##OTP##")
+                                        .config("" + no).message("OTP ##OTP## To Verify Your Mobile Number. Click On goo.gl/y7YMmm To Download Retail Assist Application For Any Retail Distribution And Supply Problems.")
                                         .context(getApplicationContext())
                                         .autoVerification(false)
                                         .build(), new VerificationListener() {
@@ -400,108 +343,6 @@ public class CommonAuditActivity extends AppCompatActivity {
 
             }
         });
-
-
-//        itc_salesman_visit_store.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-//                isItcChecked=true;
-//                if(i==R.id.yes_itc_salesman_visits_store){
-//                    itc_salesman_visit=true;
-//                    if(is_sell_cigar == true){
-//                        layout_itc_cigarette_salesman.setVisibility(View.VISIBLE);
-//                        layout_itc_non_cigarette_salesman.setVisibility(View.VISIBLE);
-//
-//                    }else {
-//                        layout_itc_non_cigarette_salesman.setVisibility(View.VISIBLE);
-//                    }
-//
-//                }else if(i==R.id.no_itc_salesman_visits_store){
-//                    itc_salesman_visit=false;
-//                    layout_itc_cigarette_salesman.setVisibility(View.GONE);
-//                    layout_itc_non_cigarette_salesman.setVisibility(View.GONE);
-//                }
-//            }
-//        });
-
-        sell_cigarette.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-                if(i==R.id.yes_sell_cigar_khm){
-                    is_sell_cigar=true;
-//                    if(itc_salesman_visit == true){
-                        layout_itc_cigarette_salesman.setVisibility(View.VISIBLE);
-//                        layout_itc_non_cigarette_salesman.setVisibility(View.VISIBLE);
-//                    }
-                }else if(i==R.id.no_sell_cigar_khm){
-                    is_sell_cigar=false;
-                    layout_itc_cigarette_salesman.setVisibility(View.GONE);
-                }
-            }
-        });
-
-
-
-        store_condition.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-                switch (i){
-                    case R.id.open_khm:
-                        open_close="open";
-//                        open_close_depend.setVisibility(View.VISIBLE);
-//                        open_close_depend_2.setVisibility(View.VISIBLE);
-                        break;
-                    case R.id.close_khm:
-                        open_close="close";
-//                        open_close_depend.setVisibility(View.GONE);
-//                        open_close_depend_2.setVisibility(View.GONE);
-                        break;
-                }
-            }
-        });
-        store_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-                switch (i){
-                    case R.id.tea_shop_khm:
-                        typeofstore="Cigarette + Tea";
-                        break;
-                    case R.id.pan_shop_khm:
-                        typeofstore="Cigarette + Pan";
-                        break;
-                    case R.id.kirana_shop_khm:
-                        typeofstore="Kirana/ General Store";
-                        break;
-                    case R.id.bakery_khm:
-                        typeofstore="Bakery/Sweet Shop";
-                        break;
-                    case R.id.chemist_khm:
-                        typeofstore="Pharmacy/ Medical store";
-                        break;
-                    case R.id.cosmetic_khm:
-                        typeofstore="Cosmetic Store";
-                        break;
-                    case R.id.wholesale_khm:
-                        typeofstore="Wholesale";
-                        break;
-                    case R.id.supermarket_khm:
-                        typeofstore="Supermarket";
-                        break;
-                    case R.id.type_dhaba_restaurant_khm:
-                        typeofstore="Restaurant / Bar/ Wine Shop";
-                        break;
-                    case R.id.tiffin_breakfast_centre_khm:
-                        typeofstore="Tiffin/ Breakfast Centre";
-                        break;
-                    case R.id.stationary_shop_khm:
-                        typeofstore="Stationery Shop";
-                        break;
-                    case R.id.poojashop:
-                        typeofstore="Pooja Shop";
-                        break;
-                }
-            }
-        });
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -524,7 +365,7 @@ public class CommonAuditActivity extends AppCompatActivity {
 //                        if(isAudit){
 //                            isInside=true;
 //                        }else {
-                            isInside=checkLatLngStatus();
+                        isInside=checkLatLngStatus();
 //                        }
                         if(!isInside){
                             runOnUiThread(new Runnable() {
@@ -556,7 +397,6 @@ public class CommonAuditActivity extends AppCompatActivity {
             };
             tracker.startListening();
         }
-
         take_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -576,12 +416,72 @@ public class CommonAuditActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Value", "1"+is_sell_cigar);
-                Log.i("Value", "2"+itc_salesman_visit);
-
-
-                if(!isImage){
-                    Toast.makeText(getApplicationContext(),"Take Picture",Toast.LENGTH_SHORT).show();
+                if(mImageView.getDrawable()==null){
+                    Toast.makeText(getApplicationContext(),"Take Outer Picture",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(store_name.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Enter Store Name",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(storeCategory.getCheckedRadioButtonId()==-1){
+                    Toast.makeText(getApplicationContext(),"Select Store Category",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(owner_mobile_number.getText().toString().length()!=10 && owner_mobile_number.getText().toString().length()!=11 && owner_mobile_number.getText().toString().length()!=0){
+                    Toast.makeText(getApplicationContext(),"Enter Valid Mobile number",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(nearSchool.getCheckedRadioButtonId()==-1){
+                    Toast.makeText(getApplicationContext(),"Select If There Is Any Educational Institute Near By",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(nearRailBus.getCheckedRadioButtonId()==-1){
+                    Toast.makeText(getApplicationContext(),"Select If There Is Any Railway Station/Bus Stand Near By",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+//                if(nearApartment.getCheckedRadioButtonId()==-1){
+//                    Toast.makeText(getApplicationContext(),"Select If There Is Any Apartment Near By",Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+                if(dealorBoard.getCheckedRadioButtonId()==-1){
+                    Toast.makeText(getApplicationContext(),"Select If Store Contains Dealer Board",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+//                if(pepsiCokeCooler.getCheckedRadioButtonId()==-1){
+//                    Toast.makeText(getApplicationContext(),"Select If Store Contains Pepsi/Coke Cooler",Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if(cadburyNestleDispenser.getCheckedRadioButtonId()==-1){
+//                    Toast.makeText(getApplicationContext(),"Select If Store Contains Cadburys/Nestle Chocolate Dispenser",Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+                if(tempPerm.getCheckedRadioButtonId()==-1){
+                    Toast.makeText(getApplicationContext(),"Select Store Type",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(openClose.getCheckedRadioButtonId()==-1){
+                    Toast.makeText(getApplicationContext(),"Select Stpre Condition",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(sell_cigarette.getCheckedRadioButtonId()==-1){
+                    Toast.makeText(getApplicationContext(),"Select If Store Sells Cigarettes",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(sellBiscuits.getCheckedRadioButtonId()==-1){
+                    Toast.makeText(getApplicationContext(),"Select If Store Sells Biscuits",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(sellChipsNamkeen.getCheckedRadioButtonId()==-1){
+                    Toast.makeText(getApplicationContext(),"Select If Store Sells Chips/Namkeen",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(sellSoaps.getCheckedRadioButtonId()==-1){
+                    Toast.makeText(getApplicationContext(),"Select If Store Sells Soaps",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(sellDeodorants.getCheckedRadioButtonId()==-1){
+                    Toast.makeText(getApplicationContext(),"Select If Store Sells Deodorants",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(acc>25){
@@ -601,76 +501,6 @@ public class CommonAuditActivity extends AppCompatActivity {
                     },1000);
                     return;
                 }
-                if(store_name.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Enter Store Name",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(typeofstore.isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Select Category Of Store",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(permTemp.getCheckedRadioButtonId()==-1){
-                    Toast.makeText(getApplicationContext(),"Select Type Of Store",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(dealorBoard.getCheckedRadioButtonId()==-1){
-                    Toast.makeText(getApplicationContext(),"Check If Store Has Dealer Board",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(dealorBoard.getCheckedRadioButtonId()==R.id.yes_dealor_board && companyDealorBoard.getCheckedRadioButtonId()==-1){
-                    Toast.makeText(getApplicationContext(),"Check If Store Has Company Dealer Board",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(open_close.isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Select Store Condition",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-//                if(open_close.contentEquals("close")){
-//                    saveData();
-//                    return;
-//                }
-//                if(owner_mobile_number.getText().toString().length()<10 && alternate_mobile_number.getText().toString().length()<10){
-//                    Toast.makeText(getApplicationContext(),"Enter Atleast One Mobile No",Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-                if(sell_cigarette.getCheckedRadioButtonId()==-1){
-                    Toast.makeText(getApplicationContext(),"Select If Store Sells Cigareete Or Not",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-//                if(itc_salesman_visit_store.getCheckedRadioButtonId()==-1){
-//                    Toast.makeText(getApplicationContext(), "Select If ITC Salesman Visits The Store",Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                if(is_sell_cigar == false && itc_salesman_visit == true){
-//                    if(non_cigarette_salesman_vist_store.getCheckedRadioButtonId()==-1) {
-//                        Toast.makeText(getApplicationContext(), "Select If ITC Non Cigarette Salesman Visits The Store", Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-//                }
-                if(is_sell_cigar == true && cigarette_salesman_visit_store.getCheckedRadioButtonId()==-1){
-//                    if(cigarette_salesman_visit_store.getCheckedRadioButtonId()==-1) {
-                        Toast.makeText(getApplicationContext(), "Select If ITC Cigarette Salesman Visits The Store", Toast.LENGTH_SHORT).show();
-                        return;
-//                    }
-                }
-//                if(is_sell_cigar == true && itc_salesman_visit == true){
-                    if(non_cigarette_salesman_vist_store.getCheckedRadioButtonId()==-1) {
-                        Toast.makeText(getApplicationContext(), "Select If ITC Non Cigarette Salesman Visits The Store", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-//                }
-                if(nearSchool.getCheckedRadioButtonId()==-1){
-                    Toast.makeText(getApplicationContext(),"Check If There Is Any Educational Institue Near By",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-//                if(sell_cigarette.getCheckedRadioButtonId() == R.id.yes_sell_cigar_khm && itc_salesman_visit_store.getCheckedRadioButtonId() == R.id.yes_itc_cigarette_salesman_visits_store && cigarette_salesman_visit_store.getCheckedRadioButtonId()==-1){
-//                    Toast.makeText(getApplicationContext(), "Select If ITC Cigarette Salesman Visits The Store",Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                if(sell_cigarette.getCheckedRadioButtonId() == R.id.yes_sell_cigar_khm && itc_salesman_visit_store.getCheckedRadioButtonId() == R.id.yes_itc_cigarette_salesman_visits_store && non_cigarette_salesman_vist_store.getCheckedRadioButtonId()==-1){
-//                    Toast.makeText(getApplicationContext(), "Select If ITC Non Cigarette Salesman Visits The Store",Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
 
                 saveData();
             }
@@ -688,30 +518,24 @@ public class CommonAuditActivity extends AppCompatActivity {
         entity.setLandmark(landmark.getText().toString());
         entity.setOwnerName(owner_name.getText().toString());
         entity.setMobileNo(owner_mobile_number.getText().toString());
-        entity.setStoreCondition(open_close);
-        entity.setStoreType(typeofstore);
-        entity.setIsNearByTeaShop(near_by_teashop.isChecked());
-        entity.setIsNearByWine(wine_shop.isChecked());
-        entity.setIsNearByDhaba(dhaba.isChecked());
+        entity.setStoreType(((RadioButton)findViewById(storeCategory.getCheckedRadioButtonId())).getText().toString());
+        entity.setStoreCondition(((RadioButton)findViewById(openClose.getCheckedRadioButtonId())).getText().toString());
+        entity.setPermTemp(((RadioButton) findViewById(tempPerm.getCheckedRadioButtonId())).getText().toString());
         entity.setisNearByEducation(nearSchool.getCheckedRadioButtonId()==R.id.yes_nearby_school);
-        entity.setIsNearByrailbus(railway_station.isChecked());
-        entity.setIsNearByJunction(road_junction.isChecked());
-        entity.setIsNearByPetrolPump(petrol_pump.isChecked());
-        entity.setIsNearByTemple(temple.isChecked());
-        entity.setIsNearByHospital(hospital.isChecked());
+        entity.setIsNearByrailbus(nearRailBus.getCheckedRadioButtonId()==R.id.yes_nearby_bus_rail);
+        entity.setIsNearByApartments(nearApartment.getCheckedRadioButtonId()==R.id.yes_nearby_apartment);
         entity.setAlternateMobile(alternate_mobile_number.getText().toString());
         entity.setOtpSent(isMsgSent);
         entity.setOtpVerified(isMobileVerified);
         entity.setOtpSent2(isMsgSent2);
         entity.setOtpVerified2(isMobileVerified2);
-        entity.setPermTemp(((RadioButton) findViewById(permTemp.getCheckedRadioButtonId())).getText().toString());
-        extraData.setIsSellCigarettes(sell_cigarette.getCheckedRadioButtonId()==R.id.yes_sell_cigar_khm?sell_cigarette.getCheckedRadioButtonId()==R.id.yes_sell_cigar_khm:false);
-//        extraData.setIsItcSalesmanVisitStore(itc_salesman_visit_store.getCheckedRadioButtonId()==R.id.yes_itc_salesman_visits_store?itc_salesman_visit_store.getCheckedRadioButtonId()==R.id.yes_itc_salesman_visits_store:false);
-//        entity.setIsItcSalesmanVisitStore(itc_salesman_visit_store.getCheckedRadioButtonId()==R.id.yes_itc_salesman_visits_store?itc_salesman_visit_store.getCheckedRadioButtonId()==R.id.yes_itc_salesman_visits_store:false);
-        extraData.setIsItcCigaretteSalesmanVisitStore(cigarette_salesman_visit_store.getCheckedRadioButtonId()==R.id.yes_itc_cigarette_salesman_visits_store?cigarette_salesman_visit_store.getCheckedRadioButtonId()==R.id.yes_itc_cigarette_salesman_visits_store:false);
-//        entity.setIsItcCigaretteSalesmanVisitStore(cigarette_salesman_visit_store.getCheckedRadioButtonId()==R.id.yes_itc_cigarette_salesman_visits_store?cigarette_salesman_visit_store.getCheckedRadioButtonId()==R.id.yes_itc_cigarette_salesman_visits_store:false);
-        extraData.setIsItcNonCigaretteSalesmanVisitStore(non_cigarette_salesman_vist_store.getCheckedRadioButtonId()==R.id.yes_itc_non_cigarette_salesman_visits_store?non_cigarette_salesman_vist_store.getCheckedRadioButtonId()==R.id.yes_itc_non_cigarette_salesman_visits_store:false);
-//        entity.setIsItcNonCigaretteSalesmanVisitStore(non_cigarette_salesman_vist_store.getCheckedRadioButtonId()==R.id.yes_itc_non_cigarette_salesman_visits_store?non_cigarette_salesman_vist_store.getCheckedRadioButtonId()==R.id.yes_itc_non_cigarette_salesman_visits_store:false);
+        extraData.setIsSellCigarettes(sell_cigarette.getCheckedRadioButtonId()==R.id.yes_sell_cigar_mumbai?sell_cigarette.getCheckedRadioButtonId()==R.id.yes_sell_cigar_mumbai:false);
+        extraData.setIsSellBiscuits(sellBiscuits.getCheckedRadioButtonId()==R.id.yes_sell_biscuits_mumbai);
+        extraData.setIsSellChipsNamkeen(sellChipsNamkeen.getCheckedRadioButtonId()==R.id.yes_sell_chips_namkeen_mumbai);
+        extraData.setIsSellSoaps(sellSoaps.getCheckedRadioButtonId()==R.id.yes_sell_soaps_mumbai);
+        extraData.setIsSellDeodorants(sellDeodorants.getCheckedRadioButtonId()==R.id.yes_sell_deodorants_mumbai);
+        extraData.setIsPepsiCokeCooler(pepsiCokeCooler.getCheckedRadioButtonId()==R.id.yes_pepsi_coke_cooler);
+        extraData.setIsCadburyNestleChocolateDispenser(cadburyNestleDispenser.getCheckedRadioButtonId()==R.id.yes_cadburys_nestle_chocolate_dispenser);
         entity.setSurveyTime("" + new SimpleDateFormat("yyy.MM.dd.HH.mm.ss", Locale.ENGLISH).format(new Date()));
         entity.setSyncStatus(false);
         extraData.setSurveyTime("" + new SimpleDateFormat("yyy.MM.dd.HH.mm.ss", Locale.ENGLISH).format(new Date()));
@@ -719,11 +543,8 @@ public class CommonAuditActivity extends AppCompatActivity {
         extraData.setItcIsuue(issue);
         extraData.setAudit_Id(ProductApplication.auditId);
         entity.setAudit_Id(ProductApplication.auditId);
-//        entity.setIsItcSalesMan(isItcSales);
-//        entity.setIsGlow_Sign_Dealor_Board(glow_sign.isChecked() && non_lit.isChecked());
-//        entity.setISNon_Lit_Dealor_Board(non_lit.isChecked());
-        entity.setIsGlow_Sign_Dealor_Board(companyDealorBoard.getCheckedRadioButtonId()==R.id.yes_company_dealor_board);
-        entity.setISNon_Lit_Dealor_Board(dealorBoard.getCheckedRadioButtonId()==R.id.yes_dealor_board && companyDealorBoard.getCheckedRadioButtonId()==R.id.no_company_dealor_board);
+//        entity.setIsGlow_Sign_Dealor_Board(companyDealorBoard.getCheckedRadioButtonId()==R.id.yes_company_dealor_board);
+        entity.setISNon_Lit_Dealor_Board(dealorBoard.getCheckedRadioButtonId()==R.id.yes_dealor_board);
         entity.setIsInside(isInside);
         data.insert(entity).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<CommonStoreDataEntity>() {
             @Override
@@ -747,6 +568,16 @@ public class CommonAuditActivity extends AppCompatActivity {
         });
     }
 
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -754,68 +585,15 @@ public class CommonAuditActivity extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-
     private void dispatchTakePictureIntent() {
         Intent newIntent=new Intent(getApplicationContext(),CameraTest.class);
         newIntent.putExtra("storeid",storeid);
         newIntent.putExtra("inorout",inOrOut);
         startActivityForResult(newIntent,cameraTestReqCode);
-//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        // Ensure that there's a camera activity to handle the intent
-//        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//            // Create the File where the photo should go
-//            File photoFile = null;
-//            try {
-//                photoFile = createImageFile();
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//            // Continue only if the File was successfully created
-//            if (photoFile != null) {
-//                Uri photoURI = FileProvider.getUriForFile(this,
-//                        "com.adjointtechnologies.mapper",
-//                        photoFile);
-//                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
-//                    takePictureIntent.setClipData(ClipData.newRawUri("", photoURI));
-//                    takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION|Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//                }
-//                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-//            }
-//        }
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-//            File imgfile=new File(mCurrentPhotoPath);
-//            Bitmap bitmap= BitmapFactory.decodeFile(mCurrentPhotoPath);
-//            FileOutputStream out=null;
-//            try{
-//                out=new FileOutputStream(imgfile);
-//                boolean compress = bitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
-//                isImage=compress;
-//            }catch (FileNotFoundException e){
-//                e.printStackTrace();
-//                Log.i(TAG,"image error="+e.toString());
-//            }finally {
-//                try {
-//                    if (out != null) {
-//                        out.close();
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    Log.i(TAG,"out error="+e.toString());
-//                }
-//            }
-//            if(inOrOut.contentEquals(INNER)){
-//                bitmap= Bitmap.createScaledBitmap(bitmap,innerImageView.getWidth(),innerImageView.getHeight(),true);
-//                innerImageView.setImageBitmap(bitmap);
-//            }else if(inOrOut.contentEquals(OUTER)){
-//                bitmap= Bitmap.createScaledBitmap(bitmap,mImageView.getWidth(),mImageView.getHeight(),true);
-//                mImageView.setImageBitmap(bitmap);
-//            }
-
-        }else if(requestCode == cameraTestReqCode && resultCode == RESULT_OK){
+         if(requestCode == cameraTestReqCode && resultCode == RESULT_OK){
             Log.i(TAG,"result ok cameratest");
             mCurrentPhotoPath=ConstantValues.imagepath+"/"+storeid+"-"+inOrOut+".jpeg";
             File imgfile=new File(mCurrentPhotoPath);
@@ -823,20 +601,13 @@ public class CommonAuditActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Error Viewing Image",Toast.LENGTH_SHORT).show();
                 return;
             }
-//            if(!imgfile.exists()){
-//                Log.d(TAG,"file not exists");
-//            }else {
-//                Log.d(TAG,"file exists");
-//            }
-            Bitmap bitmap=BitmapFactory.decodeFile(mCurrentPhotoPath);
+            Bitmap bitmap= BitmapFactory.decodeFile(mCurrentPhotoPath);
             FileOutputStream out=null;
             try{
                 out=new FileOutputStream(imgfile);
                 if(out !=null){
                     boolean compress = bitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
-                    isImage=compress;
                 }
-                isImage=true;
             }catch (FileNotFoundException e){
                 e.printStackTrace();
                 Log.i(TAG,"image error="+e.toString());
@@ -850,13 +621,10 @@ public class CommonAuditActivity extends AppCompatActivity {
                     Log.i(TAG,"out error="+e.toString());
                 }
             }
-            bitmap= Bitmap.createScaledBitmap(bitmap,mImageView.getWidth(),mImageView.getHeight(),true);
             if(inOrOut.contentEquals(INNER)){
-                bitmap= Bitmap.createScaledBitmap(bitmap,innerImageView.getWidth(),innerImageView.getHeight(),true);
-                innerImageView.setImageBitmap(bitmap);
+                Glide.with(getApplicationContext()).load(mCurrentPhotoPath).into(innerImageView);
             }else if(inOrOut.contentEquals(OUTER)){
-                bitmap= Bitmap.createScaledBitmap(bitmap,mImageView.getWidth(),mImageView.getHeight(),true);
-                mImageView.setImageBitmap(bitmap);
+                Glide.with(getApplicationContext()).load(mCurrentPhotoPath).into(mImageView);
             }
         }else {
             Log.i(TAG,"unknown result");
@@ -888,17 +656,6 @@ public class CommonAuditActivity extends AppCompatActivity {
             back_time=System.currentTimeMillis();
         }
     }
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -908,32 +665,7 @@ public class CommonAuditActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(),LoginReg.class));//LoginActivity.class));
             finish();
         }
-//        if(!storeid.startsWith("KHM") && !storeid.startsWith("AUD")){
-//            Log.i(TAG,"id error 1");
-//            if(ConstantValues.audit_id.startsWith("KHM") || ConstantValues.audit_id.startsWith("AUD")){
-//                storeid=ConstantValues.audit_id+System.currentTimeMillis();
-//            }else {
-//                Log.i(TAG,"id error 2 Constant values");
-//                MapperInfoEntity mapperInfoEntity = data.select(MapperInfoEntity.class).get().firstOrNull();
-//                if(mapperInfoEntity==null){
-//                    data.delete(MapperInfoEntity.class).get().value();
-//                    Toast.makeText(getApplicationContext(),"Login Error Please Try Again",Toast.LENGTH_SHORT).show();
-//                    startActivity(new Intent(getApplicationContext(),LoginReg.class));//LoginActivity.class));
-//                    finish();
-//                }else{
-//                    ConstantValues.audit_id=mapperInfoEntity.getAuditId();
-//                    if(ConstantValues.audit_id.startsWith("KHM") || ConstantValues.audit_id.startsWith("AUD")){
-//                        storeid=ConstantValues.audit_id+System.currentTimeMillis();
-//                        }else {
-//                            Toast.makeText(getApplicationContext(),"Login Error Please Try Again",Toast.LENGTH_SHORT).show();
-//                            data.delete(MapperInfoEntity.class).get().value();
-//                            startActivity(new Intent(getApplicationContext(),LoginReg.class));//LoginActivity.class));
-//                            finish();
-//                        }
-//                }
-//            }
-//        }
-    }
+   }
     private boolean checkLatLngStatus(){
         LatLng latLng=new LatLng(lat_value,lng_value);
         if(latLng==null){
@@ -952,7 +684,7 @@ public class CommonAuditActivity extends AppCompatActivity {
                 corners.add(new LatLng(test.get(j).getLatitude(),test.get(j).getLongitude()));
             }
             if(test.size()>0)
-            polyCornerses.add(new PolyCorners(corners,"",test.get(0).getPolygonKey()));
+                polyCornerses.add(new PolyCorners(corners,"",test.get(0).getPolygonKey()));
             Log.i("polygon","corners size before adding ="+corners.size());
         }
         if (polyCornerses.size() > 0) {

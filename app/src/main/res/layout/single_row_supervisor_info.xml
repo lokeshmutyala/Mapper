@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_5sdp"
+    android:elevation="@dimen/_25sdp">
+
+    <TextView
+        android:id="@+id/agent_name_supervisor"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.3"
+        android:background="@drawable/cell_shape"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/no_of_stores_supervisor"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.15"
+        android:background="@drawable/cell_shape"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/inside_stores_supervisor"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.15"
+        android:background="@drawable/cell_shape"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/last_sync_supervisor"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:background="@drawable/cell_shape"
+        android:gravity="center" />
+    <TextView
+        android:id="@+id/working_time_supervisor"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:background="@drawable/cell_shape"
+        android:gravity="center" />
+
+</LinearLayout>

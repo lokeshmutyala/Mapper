@@ -5,5 +5,379 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.adjointtechnologies.mapper.AuditActivityAnt">
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/rootlayout_khm">
+            <ImageView
+                android:id="@+id/imageview_khm"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/accuracy_khm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location" />
+
+                <Button
+                    android:id="@+id/take_pic_khm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:text="Take Picture" />
+            </RelativeLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/store_name_khm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Store Name*" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/landmark_khm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Landmark" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/mobile_khm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone No"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Store Type:* " />
+
+                <RadioGroup
+                    android:id="@+id/store_type_khm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/tea_shop_khm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cigarette + Tea" />
+
+                    <RadioButton
+                        android:id="@+id/pan_shop_khm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cigarette + Pan" />
+
+                    <RadioButton
+                        android:id="@+id/kirana_shop_khm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kirana/ General Store" />
+
+                    <RadioButton
+                        android:id="@+id/bakery_khm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bakery/Sweet Shop" />
+
+                    <RadioButton
+                        android:id="@+id/chemist_khm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pharmacy/ Medical store" />
+
+                    <RadioButton
+                        android:id="@+id/cosmetic_khm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cosmetic Store" />
+
+                    <RadioButton
+                        android:id="@+id/wholesale_khm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Wholesale" />
+
+                    <RadioButton
+                        android:id="@+id/supermarket_khm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Supermarket" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Restaurant / Bar/ Wine Shop"
+                        android:id="@+id/type_dhaba_restaurant_khm"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tiffin/ Breakfast Centre"
+                        android:id="@+id/tiffin_breakfast_centre_khm"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Stationery Shop"
+                        android:id="@+id/stationary_shop_khm"/>
+                </RadioGroup>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location Near By: "
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+            <CheckBox
+                android:id="@+id/near_by_teashop_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tea Shop"/>
+
+            <CheckBox
+                android:id="@+id/wine_shop_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wine Shop/Bar"/>
+
+            <CheckBox
+                android:id="@+id/dhaba_restaurant_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dhaba/Restaurant"/>
+
+            <CheckBox
+                android:id="@+id/near_by_school_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Educational Institute"/>
+
+            <CheckBox
+                android:id="@+id/railway_station_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Railway Station/Bus Stop"/>
+
+            <CheckBox
+                android:id="@+id/road_junction_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Road Junction"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/near_by_petrol_pump_new"
+                android:text="Petrol Pump"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/near_temple_new"
+                android:text="Temple"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/near_hospital_new"
+                android:text="Hospital" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Does The Store Contain Following:"/>
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/glow_sign_dealor_board"
+                    android:text="Company Dealer Board"/>
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/non_lit_dealor_board"
+                    android:text="Own Dealer Board"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Store Condition:* " />
+
+                <RadioGroup
+                    android:id="@+id/open_close_khm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/open_khm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Open" />
+
+                    <RadioButton
+                        android:id="@+id/close_khm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Close" />
+                </RadioGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/open_close_depend"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Does The Store Sell Cigarettes? *: " />
+
+                    <RadioGroup
+                        android:id="@+id/is_sell_cigar_khm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/yes_sell_cigar_khm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Yes" />
+
+                        <RadioButton
+                            android:id="@+id/no_sell_cigar_khm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="No" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cigar_depend_khm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Is Total Present In Store*:" />
+
+                    <RadioGroup
+                        android:id="@+id/is_sell_total_ant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/yes_sell_total_ant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Yes" />
+
+                        <RadioButton
+                            android:id="@+id/no_sell_total_ant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="No" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Does ITC Salesman Visit The Store? :* " />
+
+                    <RadioGroup
+                        android:id="@+id/is_itc_salesman"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/yes_itc_salesman"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Yes" />
+
+                        <RadioButton
+                            android:id="@+id/no_itc_salesman"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="No"/>
+                    </RadioGroup>
+                </LinearLayout>
+
+            </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/submit_khm"
+                android:text="Submit"/>
+        </LinearLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>
